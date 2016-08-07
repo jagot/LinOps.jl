@@ -1,5 +1,7 @@
 module LinOps
 
-# package code goes here
+include("dense.jl")
+include("cuda.jl")
+include("linop.jl")
 
 end # module
