@@ -18,8 +18,10 @@ if Pkg.installed("CUDArt") != nothing
                         β::T, y::CudaVector{T}) =
                             CUSPARSE.mv!('N', α, A, x, β, y, 'O')
 
+    include("cu_banded.jl")
+
     KindOfVector = Union{AbstractVector,CudaVector}
-    KindOfMatrix = Union{AbstractMatrix,CudaMatrix,AbstractCudaSparseMatrix}
+    KindOfMatrix = Union{AbstractMatrix,CudaMatrix,CudaBandedMatrix,AbstractCudaSparseMatrix}
 
     import Base: sub
     function sub{T}(M::CUDArt.CudaVector{T}, i::UnitRange)
@@ -40,5 +42,9 @@ if Pkg.installed("CUDArt") != nothing
         CudaMatrix{T}(ptr, (m,length(j)), M.dev)
     end
 
-    export sub
+    upload(A::BandedMatrix) = CudaBandedMatrix(A)
+    upload(A::AbstractSparseMatrix) = CudaSparseMatrixCSR(A)
+    upload(A::AbstractMatrix) = CudaArray(A)
+
+    export sub, upload
 end
