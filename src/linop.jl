@@ -1,17 +1,15 @@
-import Base: call, (+), (*)
+import Base: (+), (*)
 
 type LinOp{T<:Number}
     prod::Function
 end
 
-call{T<:Number}(op::LinOp{T},
-                y::KindOfVector,
-                x::KindOfVector,
-                α = one(T), β = zero(T)) = op.prod(y, x, α, β)
+(op::LinOp{T}){T<:Number}(y::KindOfVector,
+                          x::KindOfVector,
+                          α = one(T), β = zero(T)) = op.prod(y, x, α, β)
 
-function call{T<:Number}(op::LinOp{T},
-                         x::KindOfVector,
-                         α = one(T))
+function (op::LinOp{T}){T<:Number}(x::KindOfVector,
+                                   α = one(T))
     y = similar(x)
     op.prod(y, x, α, zero(T))
     y
