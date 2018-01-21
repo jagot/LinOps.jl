@@ -1,5 +1,7 @@
 # LinOps
 
+DEPRECATED in favour of [Jutho/LinearMaps.jl](https://github.com/Jutho/LinearMaps.jl).
+
 [![Build Status](https://travis-ci.org/jagot/LinOps.jl.svg?branch=master)](https://travis-ci.org/jagot/LinOps.jl)
 
 Very simple implementation of linear operators, that is, operations of
